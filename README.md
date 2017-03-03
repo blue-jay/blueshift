@@ -1,7 +1,7 @@
-# Blue Jay - Blueprint
+# Blue Jay - Blueshift
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/blue-jay/blueprint)](https://goreportcard.com/report/github.com/blue-jay/blueprint)
-[![GoDoc](https://godoc.org/github.com/blue-jay/blueprint?status.svg)](https://godoc.org/github.com/blue-jay/blueprint)
+[![Go Report Card](https://goreportcard.com/badge/github.com/blue-jay/blueshift)](https://goreportcard.com/report/github.com/blue-jay/blueshift)
+[![GoDoc](https://godoc.org/github.com/blue-jay/blueshift?status.svg)](https://godoc.org/github.com/blue-jay/blueshift)
 
 Blueprint for your next web application in Go.
 
