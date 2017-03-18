@@ -26,9 +26,6 @@ func RegisterServicesLegacy(config *env.Info) {
 		log.Fatal(err)
 	}
 
-	// Connect to the MySQL database
-	mysqlDB, _ := config.MySQL.Connect(true)
-
 	// Load the controller routes
 	//controller.LoadRoutes()
 
@@ -53,15 +50,20 @@ func RegisterServicesLegacy(config *env.Info) {
 		flash.Modify,
 	)
 
-	// Store the variables in flight
-	flight.StoreConfig(*config)
+	if false {
+		// Connect to the MySQL database
+		mysqlDB, _ := config.MySQL.Connect(true)
 
-	// Store the database connection in flight
-	flight.StoreDB(mysqlDB)
+		// Store the variables in flight
+		flight.StoreConfig(*config)
 
-	// Store the csrf information
-	flight.StoreXsrf(xsrf.Info{
-		AuthKey: config.Session.CSRFKey,
-		Secure:  config.Session.Options.Secure,
-	})
+		// Store the database connection in flight
+		flight.StoreDB(mysqlDB)
+
+		// Store the csrf information
+		flight.StoreXsrf(xsrf.Info{
+			AuthKey: config.Session.CSRFKey,
+			Secure:  config.Session.Options.Secure,
+		})
+	}
 }

@@ -5,21 +5,11 @@ import (
 	"os"
 	"path"
 
-	"github.com/blue-jay/blueshift/domain"
 	"github.com/blue-jay/blueshift/lib/flight"
 )
 
-// Load the routes.
-/*func Load() {
-	// Serve static files
-	router.Get("/static/*filepath", Index)
-}*/
-
 // StaticHandler represents the services required for this controller.
-type StaticHandler struct {
-	UserService domain.UserCase
-	ViewService domain.ViewCase
-}
+type StaticHandler struct{}
 
 // Index maps static files.
 func (h *StaticHandler) Index(w http.ResponseWriter, r *http.Request) {

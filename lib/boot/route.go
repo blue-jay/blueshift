@@ -16,12 +16,23 @@ func (s *Service) LoadRoutes() http.Handler {
 	//h := router.
 
 	// Register the pages.
+	//s.AddStatic()
 	//s.AddLogin(h)
 	s.AddRegister()
 
 	// Return the handler.
 	return router.Instance()
 }
+
+// AddStatic registers the static handlers.
+/*func (s *Service) AddStatic() {
+	// Create handler.
+	h := new(controller.StaticHandler)
+
+	// Load routes.
+	s.RouterService.Get("/static/*filepath", h.Index)
+
+}*/
 
 // AddLogin registers the login handlers.
 func (s *Service) AddLogin() {
@@ -46,7 +57,6 @@ func (s *Service) AddRegister() {
 	h.ViewService = s.ViewService
 
 	// Load routes.
-	//mux.HandleFunc("/register", h.Index)
 	s.RouterService.Get("/register", h.Index, acl.DisallowAuth)
 	s.RouterService.Post("/register", h.Store, acl.DisallowAuth)
 

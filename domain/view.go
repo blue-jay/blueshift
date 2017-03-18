@@ -7,7 +7,9 @@ type ViewVars map[string]interface{}
 
 // ViewCase represents a service for managing templates.
 type ViewCase interface {
-	Render(w http.ResponseWriter, r *http.Request) error
+	New(templateList ...string) ViewRepo
+
+	/*Render(w http.ResponseWriter, r *http.Request) error
 	SetFolder(relativeFolderPath string)
 	SetExtension(fileExtension string)
 	SetBaseTemplate(relativeFilePath string)
@@ -16,5 +18,20 @@ type ViewCase interface {
 	AddVar(key string, value interface{})
 	DelVar(key string)
 	GetVar(key string) interface{}
-	SetVars(vars ViewVars)
+	SetVars(vars ViewVars)*/
+}
+
+// Viewrepo represents a service for managing templates.
+type ViewRepo interface {
+	New(templateList ...string) ViewRepo
+	Render(w http.ResponseWriter, r *http.Request) error
+	/*SetFolder(relativeFolderPath string)
+	SetExtension(fileExtension string)
+	SetBaseTemplate(relativeFilePath string)
+	SetTemplate(relativeFilePath string)*/
+
+	/*AddVar(key string, value interface{})
+	DelVar(key string)
+	GetVar(key string) interface{}
+	SetVars(vars ViewVars)*/
 }

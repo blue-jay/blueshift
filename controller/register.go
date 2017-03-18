@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/blue-jay/blueprint/lib/flight"
 	"github.com/blue-jay/blueshift/domain"
-	"github.com/blue-jay/blueshift/lib/flight"
 	"github.com/blue-jay/blueshift/model/user"
 
 	"github.com/blue-jay/core/passhash"
@@ -19,10 +19,9 @@ type RegisterHandler struct {
 
 // Index displays the register page.
 func (h *RegisterHandler) Index(w http.ResponseWriter, r *http.Request) {
-	//c := flight.Context(w, r)
-	h.ViewService.SetTemplate("register/index")
+	v := h.ViewService.New("register/index")
 	//form.Repopulate(r.Form, v.Vars, "first_name", "last_name", "email")
-	h.ViewService.Render(w, r)
+	v.Render(w, r)
 }
 
 // Store handles the registration form submission.

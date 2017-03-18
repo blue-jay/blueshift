@@ -22,7 +22,7 @@ func RegisterServices(config *env.Info) *Service {
 	RegisterServicesLegacy(config)
 
 	s.RouterService = usecase.NewRouterCase(new(repository.RouterRepo))
-	s.ViewService = usecase.NewViewCase()
+	s.ViewService = usecase.NewViewCase(repository.NewViewRepo(config.View))
 
 	// Initialize the clients.
 	/*db := repository.NewClient("db.json")
