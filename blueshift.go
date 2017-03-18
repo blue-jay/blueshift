@@ -3,40 +3,32 @@ package main
 
 import (
 	"log"
-	"runtime"
 
 	"github.com/blue-jay/blueshift/lib/boot"
 	"github.com/blue-jay/blueshift/lib/env"
 
-	"github.com/blue-jay/core/router"
 	"github.com/blue-jay/core/server"
 )
 
 // init sets runtime settings.
 func init() {
-	// Verbose logging with file name and line number
+	// Verbose logging with file name and line number.
 	log.SetFlags(log.Lshortfile)
-
-	// Use all CPU cores
-	runtime.GOMAXPROCS(runtime.NumCPU())
 }
 
 // main loads the configuration file, registers the services, applies the
 // middleware to the router, and then starts the HTTP and HTTPS listeners.
 func main() {
-	// Load the configuration file
+	// Load the configuration file.
 	config, err := env.LoadConfig("env.json")
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	// Register the services
-	boot.RegisterServices(config)
+	// Register the services and retrieve the middleware.
+	handler := boot.SetUpMiddleware(boot.ServicesAndRoutes(config))
 
-	// Retrieve the middleware
-	handler := boot.SetUpMiddleware(router.Instance())
-
-	// Start the HTTP and HTTPS listeners
+	// Start the HTTP and HTTPS listeners.
 	server.Run(
 		handler,       // HTTP handler
 		handler,       // HTTPS handler

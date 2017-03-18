@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/blue-jay/blueshift/controller/status"
+	"github.com/blue-jay/blueshift/controller"
 	"github.com/blue-jay/blueshift/lib/flight"
 	"github.com/gorilla/csrf"
 )
@@ -23,7 +23,7 @@ func setUpCSRF(h http.Handler) http.Handler {
 
 	// Configure the middleware
 	cs := csrf.Protect([]byte(key),
-		csrf.ErrorHandler(http.HandlerFunc(status.InvalidToken)),
+		csrf.ErrorHandler(http.HandlerFunc(controller.StatusInvalidToken)),
 		csrf.FieldName("_token"),
 		csrf.Secure(x.Secure),
 	)(h)
