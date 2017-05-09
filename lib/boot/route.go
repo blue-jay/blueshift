@@ -5,6 +5,7 @@ import (
 
 	"github.com/blue-jay/blueshift/controller"
 	"github.com/blue-jay/blueshift/middleware/acl"
+
 	"github.com/blue-jay/core/router"
 )
 
@@ -16,7 +17,7 @@ func (s *Service) LoadRoutes() http.Handler {
 	//h := router.
 
 	// Register the pages.
-	//s.AddStatic()
+	s.AddStatic()
 	//s.AddLogin(h)
 	s.AddRegister()
 
@@ -25,14 +26,14 @@ func (s *Service) LoadRoutes() http.Handler {
 }
 
 // AddStatic registers the static handlers.
-/*func (s *Service) AddStatic() {
+func (s *Service) AddStatic() {
 	// Create handler.
 	h := new(controller.StaticHandler)
 
 	// Load routes.
 	s.RouterService.Get("/static/*filepath", h.Index)
 
-}*/
+}
 
 // AddLogin registers the login handlers.
 func (s *Service) AddLogin() {

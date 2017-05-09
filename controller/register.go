@@ -1,12 +1,15 @@
 package controller
 
 import (
+	"encoding/base64"
 	"errors"
+	"log"
 	"net/http"
 
-	"github.com/blue-jay/blueprint/lib/flight"
 	"github.com/blue-jay/blueshift/domain"
+	"github.com/blue-jay/blueshift/lib/flight"
 	"github.com/blue-jay/blueshift/model/user"
+	"github.com/gorilla/securecookie"
 
 	"github.com/blue-jay/core/passhash"
 )
@@ -21,7 +24,50 @@ type RegisterHandler struct {
 func (h *RegisterHandler) Index(w http.ResponseWriter, r *http.Request) {
 	v := h.ViewService.New("register/index")
 	//form.Repopulate(r.Form, v.Vars, "first_name", "last_name", "email")
+
+	/*expiration := time.Now().Add(365 * 24 * time.Hour) ////Set to expire in 1 year
+	cookie := http.Cookie{Name: "_blueshift", Value: "alice_cooper@gmail.com", Expires: expiration, HttpOnly: false}
+	http.SetCookie(w, &cookie)*/
+	saveSession(w, r)
 	v.Render(w, r)
+}
+
+func saveSession(w http.ResponseWriter, r *http.Request) {
+	c := flight.Context(w, r)
+	// Decode authentication key
+	auth, err := base64.StdEncoding.DecodeString(c.Config.Session.AuthKey)
+	if err != nil || len(auth) == 0 {
+		log.Println(err)
+	}
+	encrypt, err := base64.StdEncoding.DecodeString(c.Config.Session.EncryptKey)
+	if err != nil {
+		log.Println(err)
+	}
+
+	var s = securecookie.New(auth, encrypt)
+
+	var cookieName = "_blueshift"
+
+	// Read the cookie.
+	_, err = r.Cookie(cookieName)
+	if err != nil {
+		value := map[string]string{
+			"foo": "bar",
+		}
+
+		if encoded, err := s.Encode(cookieName, value); err == nil {
+			cookie := &http.Cookie{
+				Name:     cookieName,
+				Value:    encoded,
+				Path:     "/",
+				HttpOnly: false,
+			}
+			http.SetCookie(w, cookie)
+			log.Println(cookie)
+		} else {
+			log.Println(err)
+		}
+	}
 }
 
 // Store handles the registration form submission.

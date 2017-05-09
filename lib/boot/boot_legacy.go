@@ -50,12 +50,12 @@ func RegisterServicesLegacy(config *env.Info) {
 		flash.Modify,
 	)
 
+	// Store the variables in flight
+	flight.StoreConfig(*config)
+
 	if false {
 		// Connect to the MySQL database
 		mysqlDB, _ := config.MySQL.Connect(true)
-
-		// Store the variables in flight
-		flight.StoreConfig(*config)
 
 		// Store the database connection in flight
 		flight.StoreDB(mysqlDB)

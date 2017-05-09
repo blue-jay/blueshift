@@ -6,7 +6,9 @@ import (
 
 	"github.com/blue-jay/blueshift/middleware/logrequest"
 	"github.com/blue-jay/blueshift/middleware/rest"
+
 	"github.com/blue-jay/core/router"
+
 	"github.com/gorilla/context"
 )
 

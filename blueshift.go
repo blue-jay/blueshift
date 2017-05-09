@@ -6,6 +6,7 @@ import (
 
 	"github.com/blue-jay/blueshift/lib/boot"
 	"github.com/blue-jay/blueshift/lib/env"
+	"github.com/blue-jay/blueshift/middleware/ctx"
 
 	"github.com/blue-jay/core/server"
 )
@@ -30,8 +31,8 @@ func main() {
 
 	// Start the HTTP and HTTPS listeners.
 	server.Run(
-		handler,       // HTTP handler
-		handler,       // HTTPS handler
-		config.Server, // Server settings
+		ctx.AddContext(handler), // HTTP handler
+		handler,                 // HTTPS handler
+		config.Server,           // Server settings
 	)
 }
